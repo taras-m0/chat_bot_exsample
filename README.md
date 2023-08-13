@@ -1,5 +1,12 @@
 # Chat Bot Exsample
 ## Использование
+Для подключения чата на свою страницу необходимо добавить следующий код в любое место:
+```html
+<script defer="defer" src="https://taras-m0.github.io/chat_bot_exsample/js/chunk-vendors.1e23e854.js"></script>
+<script defer="defer" src="https://taras-m0.github.io/chat_bot_exsample/js/app.c0d00200.js"></script>
+<link href="https://taras-m0.github.io/chat_bot_exsample/css/app.3f23c6a3.css" rel="stylesheet">
+```
+
 
 ## Разработка
 ### Project setup
