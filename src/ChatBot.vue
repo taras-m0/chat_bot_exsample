@@ -3,7 +3,7 @@ import { ref } from "vue";
 import CloudQuestion from "@/assets/CloudQuestion.vue";
 import ChatPanel from "@/components/ChatPanel.vue";
 
-const open = ref(true);
+const open = ref(false);
 </script>
 
 <template>
