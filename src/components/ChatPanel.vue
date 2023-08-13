@@ -1,5 +1,5 @@
 <script setup>
-import { defineEmits, ref } from "vue";
+import { defineEmits, ref, onMounted, onBeforeUnmount } from "vue";
 // import CircleClose from "@/assets/CircleClose.vue";
 import CrossClose from "@/assets/CrossClose.vue";
 import InputPanel from "@/components/InputPanel.vue";
@@ -16,21 +16,43 @@ const emit = defineEmits(["close"]);
 
 const messagesList = ref(messages);
 function send(message) {
-  console.log("message", message);
   messagesList.value.say(message);
 }
-console.log(MESSAGE_TYPE);
 
 function keyup(event) {
   if (event.keyCode == 27) {
     emit("close");
   }
 }
+
+// Отображаем последние сообщания
+let mo;
+const containerEl = ref(null);
+onBeforeUnmount(() => {
+  mo && mo.disconnect();
+});
+onMounted(() => {
+  mo = new MutationObserver((records) => {
+    records.forEach((record) => {
+      record.addedNodes.forEach((node) => {
+        node.scrollIntoView &&
+          node.scrollIntoView({
+            block: "nearest",
+          });
+      });
+    });
+  });
+
+  mo.observe(containerEl.value, {
+    childList: true,
+    subtree: false,
+  });
+});
 </script>
 
 <template>
   <div class="chat-panel" @keyup.prevent.stop="keyup">
-    <div class="chat-panel__messages">
+    <div class="chat-panel__messages" ref="containerEl">
       <template v-for="mess in messagesList" :key="mess.message">
         <component
           v-if="mess.type == MESSAGE_TYPE.YOUR"
